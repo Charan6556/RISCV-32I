@@ -1,0 +1,24 @@
+﻿# QuestaSim / ModelSim
+work/
+transcript
+*.wlf
+*.vstf
+*.log
+*.vcd
+
+# Editor backups (Vim/Emacs)
+*~
+*.un~
+.*.un~
+*.swp
+
+# VCS / DVE
+csrc/
+simv
+simv.daidir/
+DVEfiles/
+.vlogansetup.*
+
+# OS
+.DS_Store
+Thumbs.db
