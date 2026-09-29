@@ -11,6 +11,7 @@ The repository contains the design, runnable simulation and synthesis scripts, a
 | Instruction functional coverage | **100.00%** of the 37 instruction bins | [Full test, seed 25](docs/images/coverage-seed25.png) |
 | Pipeline functional coverage | **98.41%** | [Full test, seed 25](docs/images/coverage-seed25.png) |
 | Random-seed regression | **1,000 passes, 0 failures** reported by the original runner | [Regression summary](docs/images/regression-1000-pass.png) |
+| Regression stimulus | **140,000 instruction transactions** (140 per seed × 1,000 seeds) | [Full-test sequence](tb_simple/uvm/riscv_full_sequence.sv) |
 | Full-test scoreboard, seed 25 | **682 commits, 0 errors** | [Coverage and scoreboard output](docs/images/coverage-seed25.png) |
 | Bubble Sort | **PASS**, output `1 2 4 5 8` | [Program result](docs/images/bubblesort-result.png) |
 | Bubble Sort performance | **169 cycles / 121 retired instructions = 1.397 CPI** | [Program result](docs/images/bubblesort-result.png) |
@@ -121,7 +122,7 @@ Commit visibility is connected to internal MEM/WB signals in `tb_uvm_top.sv`; it
 | `riscv_full_test` | 80 fixed transactions plus 60 generated instructions; runs for 700 rising clock edges after its reset sequence |
 | `riscv_bubblesort_test` | Sort five values, check memory, and measure cycles and retired instructions |
 
-Each full-test seed loads **140 instruction transactions**. A 1,000-seed run therefore loads **140,000 transactions**. These are program-loading transactions, not dynamic retired instructions: execution can include branches and the NOP-filled memory after the loaded program.
+Each full-test seed loads **140 instruction transactions**: 80 fixed transactions and 60 generated instructions. Across 1,000 seeds, the total is **140 × 1,000 = 140,000 instruction transactions**. These are program-loading transactions, not dynamic retired instructions: execution can include branches and the NOP-filled memory after the loaded program.
 
 `riscv_sequence.sv` and `riscv_test.sv` are retained as early bring-up sources. They are not included in the current UVM package or exposed by `run.sh`. The separate `tb_core.sv` testbench reads `program.hex`, prints registers, and checks x0; it is not the full UVM verification flow.
 
