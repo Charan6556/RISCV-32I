@@ -11,7 +11,7 @@ The repository contains the design, simulation and synthesis scripts, synthesis 
 | Instruction functional coverage | **100.00%** of the 37 instruction bins | [Full test, seed 25](docs/images/coverage-seed25.png) |
 | Pipeline functional coverage | **98.41%** | [Full test, seed 25](docs/images/coverage-seed25.png) |
 | Random-seed regression | **1,000 seeds passed, 0 failures** (first version of the regression script; see note) | [Regression summary](docs/images/regression-1000-pass.png) |
-| Stimulus per seed | 80 fixed directed instructions + 60 random instructions | [Full-test sequence](tb_simple/uvm/riscv_full_sequence.sv) |
+| Stimulus per seed | 80 fixed directed instructions + 60 random instructions (60,000 random instructions across 1,000 seeds) | [Full-test sequence](tb_simple/uvm/riscv_full_sequence.sv) |
 | Full-test scoreboard, seed 25 | **682 commits, 0 errors** | [Coverage and scoreboard output](docs/images/coverage-seed25.png) |
 | Bubble Sort | **PASS**, output `1 2 4 5 8` | [Program result](docs/images/bubblesort-result.png) |
 | Bubble Sort performance | **169 cycles / 121 retired instructions = 1.397 CPI** | [Program result](docs/images/bubblesort-result.png) |
