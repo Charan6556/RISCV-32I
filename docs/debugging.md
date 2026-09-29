@@ -2,7 +2,7 @@
 
 ## Initial failure
 
-The supplied screenshot of the earlier 100-seed regression reports **88 passes and 12 failures**:
+My first 100-seed regression reported **88 passes and 12 failures**:
 
 ```text
 9 14 31 39 40 42 46 49 67 91 94 98
@@ -10,18 +10,18 @@ The supplied screenshot of the earlier 100-seed regression reports **88 passes a
 
 ![Earlier failing regression](images/regression-before-fix.png)
 
-The prior project discussion includes this seed-9 log excerpt:
+Seed 9 failed with this scoreboard message:
 
 ```text
 PC = 0000017c  INSTR = 41845793
 REG FAIL PC=0000017c expected x15=000000ff got x15=ffffffff
 ```
 
-`0x41845793` encodes `SRAI x15, x8, 24`. The mismatch led to inspection of the scoreboard's arithmetic-right-shift handling. The earlier model used a conditional expression combining a signed arithmetic shift and an unsigned logical shift. Mixing those operands can make the conditional expression unsigned and defeat the intended sign extension.
+`0x41845793` encodes `SRAI x15, x8, 24`. The DUT's `ffffffff` was correct (arithmetic shift of a negative value); the scoreboard's expected value was wrong. My reference model used one conditional expression that mixed a signed arithmetic shift with an unsigned logical shift. In SystemVerilog, mixing signed and unsigned operands makes the whole expression unsigned, so the sign extension was lost.
 
-## Correction present in the uploaded project
+## Fix
 
-The uploaded scoreboard already uses explicit branches for both SRA and SRAI. For SRAI:
+I split SRA and SRAI into explicit branches so the signed shift is evaluated on its own. For SRAI:
 
 ```systemverilog
 if (instr[30])
@@ -30,13 +30,11 @@ else
     result = a >> instr[24:20];
 ```
 
-The cleanup preserves this code and adds a short comment explaining why the signed expression is kept separate. No processor logic was changed for this packaging task.
+The processor RTL did not change; the bug was in the checker. I traced seed 9 in detail; I did not keep a separate trace for each of the other eleven failing seeds.
 
-This is a documented example from seed 9 and the correction present in the archive. The retained evidence does not include a separate root-cause trace for every one of the twelve failing seeds.
+## Regression after the fix
 
-## Later regression result
-
-The later supplied screenshot reaches seed 1000 and reports:
+The next run reached seed 1000 and reported:
 
 ```text
 PASS = 1000
@@ -45,12 +43,8 @@ FAILED SEEDS
 NONE
 ```
 
-![Later regression summary](images/regression-1000-pass.png)
+![Regression summary after the fix](images/regression-1000-pass.png)
 
-The same screenshot retains the old “100 SEED” heading and shell messages saying `//: Is a directory`. Those messages came from two comment lines written with `//` instead of Bash's `#`. They were separate from the scoreboard signedness issue: changing comments alone does not correct instruction-result mismatches.
+That run used the first version of my regression script. Its screenshot still shows the old “100 SEED” heading and `//: Is a directory` messages from two comment lines written with `//` instead of Bash's `#`. Those messages were harmless and unrelated to the scoreboard bug.
 
-The cleaned runner uses valid comments, derives its heading from the requested seed count, removes each stale simulation log before rerunning it, checks Xcelium's return status, and requires complete UVM and scoreboard summaries. It also retains assertion-message checks and detects simulator errors. The 1,000-pass screenshot was produced by the original runner, before these stricter checks were added.
-
-## Evidence available
-
-The repository includes the original before/after regression screenshots, coverage output, Bubble Sort output, a successful Bubble Sort pipeline waveform, and synthesis screenshots. The twelve failing seeds' raw logs and a failure-specific waveform are not included in the supplied files. The failure diagnosis above uses the log excerpt from the prior project discussion and the source in the ZIP.
+I have since improved the script: it uses valid comments, derives its heading from the seed count, removes stale logs before each run, checks Xcelium's exit status, requires complete UVM and scoreboard summaries, and checks for assertion failures and simulator errors. I have not yet rerun all 1,000 seeds with this stricter version.
