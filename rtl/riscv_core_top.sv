@@ -1,27 +1,14 @@
-//==============================================================================
-// riscv_core_top.sv
-//   Top-level single-cycle RV32I core. Wires the eight sub-modules together
-//   and hosts the four convergence points that live nowhere else:
-//     (1) the two ALU source muxes (mux A, mux B)
-//     (2) the two target adders (br_jal_target, jalr_target)
-//     (3) the 3-input writeback mux
-//     (4) the pc_sel combining logic (folds is_jal, is_jalr, is_branch·br_taken)
-//
-//   Boundary pins match spec §2.2 / Addendum A.1 exactly. This same boundary
-//   becomes the AXI4-Lite master port in Stage 5 -- the migration replaces
-//   the memory model, not this module's ports.
-//==============================================================================
 module riscv_core_top
-  import riscv_pkg::*;
+    import riscv_pkg::*;
 (
     input  logic        clk,
     input  logic        rst_n,
 
-    // Instruction memory interface (combinational in Stage 1)
+    // instruction memory
     output logic [31:0] imem_addr,
     input  logic [31:0] imem_rdata,
 
-    // Data memory interface (combinational in Stage 1; wstrb becomes AXI WSTRB later)
+    // data memory
     output logic [31:0] dmem_addr,
     output logic [31:0] dmem_wdata,
     output logic [3:0]  dmem_wstrb,
@@ -29,38 +16,107 @@ module riscv_core_top
     input  logic [31:0] dmem_rdata
 );
 
-    // -------------------------------------------------------------------
-    // Internal wires: everything connecting sub-modules to each other.
-    // Ports on this module (imem_*, dmem_*) do NOT get redeclared here.
-    // -------------------------------------------------------------------
-    ctrl_t              ctrl;
+    // IF stage
+    logic [31:0] pc;
+    logic [31:0] pc4;
+    logic [1:0]  pc_sel;
+    logic        pc_en;
 
-    logic [31:0]        pc, pc4;
-    logic [31:0]        imm;
-    logic [31:0]        rs1_data, rs2_data;
-    logic [31:0]        alu_op_a, alu_op_b;
-    logic [31:0]        alu_result;
-    logic [31:0]        load_data;
-    logic [31:0]        wb_data;
+    logic [31:0] br_jal_target;
+    logic [31:0] jalr_target;
 
-    logic [31:0]        br_jal_target;
-    logic [31:0]        jalr_target;
-    logic               br_taken;
-    logic [1:0]         pc_sel;
+    // IF ID signals
+    logic [31:0] if_id_pc;
+    logic [31:0] if_id_pc4;
+    logic [31:0] if_id_instr;
+    logic        if_id_valid;
 
-    // Register indices are fixed slices of the instruction (§1.3):
-    logic [4:0]         rs1_addr, rs2_addr, rd_addr;
-    assign rs1_addr = imem_rdata[19:15];
-    assign rs2_addr = imem_rdata[24:20];
-    assign rd_addr  = imem_rdata[11:7];
+    logic        if_id_stall;
+    logic        if_id_flush;
 
-    // -------------------------------------------------------------------
-    // pc_unit -- IF: holds PC, computes pc+4, selects next-PC
-    // -------------------------------------------------------------------
+    // ID stage
+    ctrl_t       id_ctrl;
+
+    logic [4:0]  id_rs1;
+    logic [4:0]  id_rs2;
+    logic [4:0]  id_rd;
+
+    logic [31:0] id_rs1_data;
+    logic [31:0] id_rs2_data;
+    logic [31:0] id_rs1_value;
+    logic [31:0] id_rs2_value;
+
+    logic [31:0] id_imm;
+
+    // ID EX signals
+    logic [31:0] id_ex_pc;
+    logic [31:0] id_ex_pc4;
+
+    logic [31:0] id_ex_rs1_data;
+    logic [31:0] id_ex_rs2_data;
+    logic [31:0] id_ex_imm;
+
+    logic [4:0]  id_ex_rs1;
+    logic [4:0]  id_ex_rs2;
+    logic [4:0]  id_ex_rd;
+
+    ctrl_t       id_ex_ctrl;
+    logic        id_ex_valid;
+
+    logic        id_ex_flush;
+
+    // forwarding signals
+    logic [1:0]  forward_a;
+    logic [1:0]  forward_b;
+
+    logic [31:0] ex_rs1_forwarded;
+    logic [31:0] ex_rs2_forwarded;
+    logic [31:0] ex_mem_forward_data;
+
+    // hazard signal
+    logic        hazard_stall;
+
+    // EX stage
+    logic [31:0] ex_alu_a;
+    logic [31:0] ex_alu_b;
+    logic [31:0] ex_alu_result;
+
+    logic        ex_br_taken;
+    logic        ex_redirect;
+
+    // EX MEM signals
+    logic [31:0] ex_mem_alu_result;
+    logic [31:0] ex_mem_store_data;
+    logic [31:0] ex_mem_pc4;
+
+    logic [4:0]  ex_mem_rd;
+
+    ctrl_t       ex_mem_ctrl;
+    logic        ex_mem_valid;
+
+    // MEM stage
+    logic [31:0] mem_load_data;
+
+    // MEM WB signals
+    logic [31:0] mem_wb_alu_result;
+    logic [31:0] mem_wb_load_data;
+    logic [31:0] mem_wb_pc4;
+
+    logic [4:0]  mem_wb_rd;
+
+    ctrl_t       mem_wb_ctrl;
+    logic        mem_wb_valid;
+
+    // WB stage
+    logic [31:0] wb_data;
+
+    // pc
+    assign pc_en = !hazard_stall;
+
     pc_unit u_pc_unit (
         .clk           (clk),
         .rst_n         (rst_n),
-        .pc_en         (1'b1),          // Stage 1: never stalls; Stage 2 wires to hazard unit
+        .pc_en         (pc_en),
         .pc_sel        (pc_sel),
         .br_jal_target (br_jal_target),
         .jalr_target   (jalr_target),
@@ -68,122 +124,367 @@ module riscv_core_top
         .pc4           (pc4)
     );
 
-    // PC drives the instruction-memory address port
     assign imem_addr = pc;
 
-    // -------------------------------------------------------------------
-    // decoder -- ID: instruction bits -> ctrl_t control word
-    // -------------------------------------------------------------------
-    decoder u_decoder (
-        .instr (imem_rdata),
-        .ctrl  (ctrl)
+    // IF ID register
+    assign if_id_stall = hazard_stall;
+    assign if_id_flush = ex_redirect;
+
+    if_id_reg u_if_id (
+        .clk       (clk),
+        .rst_n     (rst_n),
+        .stall     (if_id_stall),
+        .flush     (if_id_flush),
+
+        .pc_in     (pc),
+        .pc4_in    (pc4),
+        .instr_in  (imem_rdata),
+        .valid_in  (1'b1),
+
+        .pc_out    (if_id_pc),
+        .pc4_out   (if_id_pc4),
+        .instr_out (if_id_instr),
+        .valid_out (if_id_valid)
     );
 
-    // -------------------------------------------------------------------
-    // regfile -- ID: async 2 reads, sync 1 write; x0 forced to zero
-    // -------------------------------------------------------------------
+    // register addresses
+    assign id_rs1 = if_id_instr[19:15];
+    assign id_rs2 = if_id_instr[24:20];
+    assign id_rd  = if_id_instr[11:7];
+
+    // decoder
+    decoder u_decoder (
+        .instr (if_id_instr),
+        .ctrl  (id_ctrl)
+    );
+
+    // register file
     regfile u_regfile (
         .clk       (clk),
         .rst_n     (rst_n),
-        .rs1_addr  (rs1_addr),
-        .rs2_addr  (rs2_addr),
-        .rd_addr   (rd_addr),
-        .rd_we     (ctrl.reg_write),
+
+        .rs1_addr  (id_rs1),
+        .rs2_addr  (id_rs2),
+
+        .rd_addr   (mem_wb_rd),
+        .rd_we     (mem_wb_ctrl.reg_write &&
+                    mem_wb_valid),
+
         .rd_data   (wb_data),
-        .rs1_data  (rs1_data),
-        .rs2_data  (rs2_data)
+
+        .rs1_data  (id_rs1_data),
+        .rs2_data  (id_rs2_data)
     );
 
-    // -------------------------------------------------------------------
-    // immgen -- ID: builds 32-bit immediate per format
-    // -------------------------------------------------------------------
-    immgen u_immgen (
-        .instr   (imem_rdata),
-        .imm_sel (ctrl.imm_sel),
-        .imm     (imm)
-    );
-
-    // -------------------------------------------------------------------
-    // Convergence point 1: the two ALU source muxes
-    //   Mux A picks rs1_data (default) or pc (AUIPC, JAL)
-    //   Mux B picks rs2_data (R-type) or imm (everything else)
-    // -------------------------------------------------------------------
-    assign alu_op_a = ctrl.alu_src_a ? pc  : rs1_data;
-    assign alu_op_b = ctrl.alu_src_b ? imm : rs2_data;
-
-    // -------------------------------------------------------------------
-    // alu -- EX: 11 combinational ops
-    // -------------------------------------------------------------------
-    alu u_alu (
-        .op_a       (alu_op_a),
-        .op_b       (alu_op_b),
-        .alu_op     (ctrl.alu_op),
-        .alu_result (alu_result)
-    );
-
-    // -------------------------------------------------------------------
-    // branch_cond -- EX: 6 comparisons, gated by is_branch
-    //   Takes rs1/rs2 pre-mux (branches compare registers, never immediates)
-    // -------------------------------------------------------------------
-    branch_cond u_branch_cond (
-        .rs1_data  (rs1_data),
-        .rs2_data  (rs2_data),
-        .funct3    (ctrl.funct3_q),
-        .is_branch (ctrl.is_branch),
-        .br_taken  (br_taken)
-    );
-
-    // -------------------------------------------------------------------
-    // lsu -- MEM: byte lanes + wstrb; alu_result is the memory address
-    // -------------------------------------------------------------------
-    lsu u_lsu (
-        .addr        (alu_result),
-        .funct3      (ctrl.funct3_q),
-        .mem_read    (ctrl.mem_read),
-        .mem_write   (ctrl.mem_write),
-        .store_data  (rs2_data),
-        .dmem_rdata  (dmem_rdata),
-        .dmem_addr   (dmem_addr),
-        .dmem_wdata  (dmem_wdata),
-        .dmem_wstrb  (dmem_wstrb),
-        .dmem_req    (dmem_req),
-        .load_data   (load_data)
-    );
-
-    // -------------------------------------------------------------------
-    // Convergence point 2: target adders
-    //   br_jal_target = pc + imm    (BRANCH taken, JAL)
-    //   jalr_target   = (rs1 + imm) & ~1   (JALR; LSB forced to 0)
-    //
-    // These live here because they need signals from multiple modules
-    // (pc from pc_unit, imm from immgen, rs1_data from regfile) that no
-    // single module owns.
-    // -------------------------------------------------------------------
-    assign br_jal_target = pc + imm;
-    assign jalr_target   = (rs1_data + imm) & ~32'h1;
-
-    // -------------------------------------------------------------------
-    // Convergence point 3: writeback mux (3 inputs, selected by wb_sel)
-    // -------------------------------------------------------------------
+    // WB bypass handles a write and decode read in the same cycle
     always_comb begin
-        unique case (ctrl.wb_sel)
-            WB_ALU:  wb_data = alu_result;
-            WB_LOAD: wb_data = load_data;
-            WB_PC4:  wb_data = pc4;
-            default: wb_data = alu_result;   // no latch; safe default
+        id_rs1_value = id_rs1_data;
+        id_rs2_value = id_rs2_data;
+
+        if (mem_wb_valid &&
+            mem_wb_ctrl.reg_write &&
+            (mem_wb_rd != 5'b0) &&
+            (mem_wb_rd == id_rs1))
+
+            id_rs1_value = wb_data;
+
+        if (mem_wb_valid &&
+            mem_wb_ctrl.reg_write &&
+            (mem_wb_rd != 5'b0) &&
+            (mem_wb_rd == id_rs2))
+
+            id_rs2_value = wb_data;
+    end
+
+    // immediate
+    immgen u_immgen (
+        .instr   (if_id_instr),
+        .imm_sel (id_ctrl.imm_sel),
+        .imm     (id_imm)
+    );
+
+    // hazard unit
+    hazard_unit u_hazard (
+        .id_ex_mem_read (
+            id_ex_ctrl.mem_read &&
+            id_ex_valid
+        ),
+
+        .id_ex_rd   (id_ex_rd),
+
+        .if_id_rs1  (id_rs1),
+        .if_id_rs2  (id_rs2),
+
+        .stall      (hazard_stall)
+    );
+
+    // insert a bubble on a load-use stall; flush on a redirect
+    assign id_ex_flush =
+        ex_redirect || hazard_stall;
+
+    // ID EX register
+    id_ex_reg u_id_ex (
+        .clk          (clk),
+        .rst_n        (rst_n),
+        .flush        (id_ex_flush),
+
+        .pc_in        (if_id_pc),
+        .pc4_in       (if_id_pc4),
+
+        .rs1_data_in  (id_rs1_value),
+        .rs2_data_in  (id_rs2_value),
+        .imm_in       (id_imm),
+
+        .rs1_in       (id_rs1),
+        .rs2_in       (id_rs2),
+        .rd_in        (id_rd),
+
+        .ctrl_in      (id_ctrl),
+        .valid_in     (if_id_valid),
+
+        .pc_out       (id_ex_pc),
+        .pc4_out      (id_ex_pc4),
+
+        .rs1_data_out (id_ex_rs1_data),
+        .rs2_data_out (id_ex_rs2_data),
+        .imm_out      (id_ex_imm),
+
+        .rs1_out      (id_ex_rs1),
+        .rs2_out      (id_ex_rs2),
+        .rd_out       (id_ex_rd),
+
+        .ctrl_out     (id_ex_ctrl),
+        .valid_out    (id_ex_valid)
+    );
+
+    // forwarding unit
+    forwarding_unit u_forwarding (
+        .id_ex_rs1        (id_ex_rs1),
+        .id_ex_rs2        (id_ex_rs2),
+
+        .ex_mem_rd        (ex_mem_rd),
+
+        // load data is available in MEM/WB, not EX/MEM
+        .ex_mem_reg_write (
+            ex_mem_ctrl.reg_write &&
+            ex_mem_valid &&
+            (ex_mem_ctrl.wb_sel != WB_LOAD)
+        ),
+
+        .mem_wb_rd        (mem_wb_rd),
+
+        .mem_wb_reg_write (
+            mem_wb_ctrl.reg_write &&
+            mem_wb_valid
+        ),
+
+        .forward_a        (forward_a),
+        .forward_b        (forward_b)
+    );
+
+    // EX MEM forward data
+    always_comb begin
+        unique case (ex_mem_ctrl.wb_sel)
+            WB_ALU:
+                ex_mem_forward_data = ex_mem_alu_result;
+
+            WB_PC4:
+                ex_mem_forward_data = ex_mem_pc4;
+
+            default:
+                ex_mem_forward_data = ex_mem_alu_result;
         endcase
     end
 
-    // -------------------------------------------------------------------
-    // Convergence point 4: pc_sel combining logic
-    //   Priority: jalr > jal > taken-branch > pc+4
-    //   JAL and taken-branches share pc_sel=1 (both go to br_jal_target)
-    // -------------------------------------------------------------------
+    // forwarding mux
     always_comb begin
-        if      (ctrl.is_jalr)                  pc_sel = 2'b10;   // jalr_target
-        else if (ctrl.is_jal)                   pc_sel = 2'b01;   // br_jal_target
-        else if (ctrl.is_branch && br_taken)    pc_sel = 2'b01;   // br_jal_target
-        else                                    pc_sel = 2'b00;   // pc + 4
+        unique case (forward_a)
+            2'b00:
+                ex_rs1_forwarded = id_ex_rs1_data;
+
+            2'b01:
+                ex_rs1_forwarded = wb_data;
+
+            2'b10:
+                ex_rs1_forwarded = ex_mem_forward_data;
+
+            default:
+                ex_rs1_forwarded = id_ex_rs1_data;
+        endcase
+
+        unique case (forward_b)
+            2'b00:
+                ex_rs2_forwarded = id_ex_rs2_data;
+
+            2'b01:
+                ex_rs2_forwarded = wb_data;
+
+            2'b10:
+                ex_rs2_forwarded = ex_mem_forward_data;
+
+            default:
+                ex_rs2_forwarded = id_ex_rs2_data;
+        endcase
     end
 
+    // alu inputs
+    assign ex_alu_a =
+        id_ex_ctrl.alu_src_a ?
+        id_ex_pc :
+        ex_rs1_forwarded;
+
+    assign ex_alu_b =
+        id_ex_ctrl.alu_src_b ?
+        id_ex_imm :
+        ex_rs2_forwarded;
+
+    // alu
+    alu u_alu (
+        .op_a       (ex_alu_a),
+        .op_b       (ex_alu_b),
+        .alu_op     (id_ex_ctrl.alu_op),
+        .alu_result (ex_alu_result)
+    );
+
+    // branch check
+    branch_cond u_branch_cond (
+        .rs1_data  (ex_rs1_forwarded),
+        .rs2_data  (ex_rs2_forwarded),
+        .funct3    (id_ex_ctrl.funct3_q),
+        .is_branch (id_ex_ctrl.is_branch),
+        .br_taken  (ex_br_taken)
+    );
+
+    // branch target
+    assign br_jal_target =
+        id_ex_pc + id_ex_imm;
+
+    // jalr target
+    assign jalr_target =
+        (ex_rs1_forwarded + id_ex_imm)
+        & ~32'h1;
+
+    // redirect
+    assign ex_redirect =
+        id_ex_valid &&
+        (
+            id_ex_ctrl.is_jal ||
+            id_ex_ctrl.is_jalr ||
+            (id_ex_ctrl.is_branch &&
+             ex_br_taken)
+        );
+
+    // pc select
+    always_comb begin
+        if (id_ex_valid &&
+            id_ex_ctrl.is_jalr)
+
+            pc_sel = PC_JALR;
+
+        else if (id_ex_valid &&
+                 id_ex_ctrl.is_jal)
+
+            pc_sel = PC_BRJAL;
+
+        else if (id_ex_valid &&
+                 id_ex_ctrl.is_branch &&
+                 ex_br_taken)
+
+            pc_sel = PC_BRJAL;
+
+        else
+            pc_sel = PC_PLUS4;
+    end
+
+    // EX MEM register
+    ex_mem_reg u_ex_mem (
+        .clk            (clk),
+        .rst_n          (rst_n),
+
+        .alu_result_in  (ex_alu_result),
+        .store_data_in  (ex_rs2_forwarded),
+
+        .pc4_in         (id_ex_pc4),
+        .rd_in          (id_ex_rd),
+
+        .ctrl_in        (id_ex_ctrl),
+        .valid_in       (id_ex_valid),
+
+        .alu_result_out (ex_mem_alu_result),
+        .store_data_out (ex_mem_store_data),
+
+        .pc4_out        (ex_mem_pc4),
+        .rd_out         (ex_mem_rd),
+
+        .ctrl_out       (ex_mem_ctrl),
+        .valid_out      (ex_mem_valid)
+    );
+
+    // load store unit
+    lsu u_lsu (
+        .addr       (ex_mem_alu_result),
+        .funct3     (ex_mem_ctrl.funct3_q),
+
+        .mem_read   (
+            ex_mem_ctrl.mem_read &&
+            ex_mem_valid
+        ),
+
+        .mem_write  (
+            ex_mem_ctrl.mem_write &&
+            ex_mem_valid
+        ),
+
+        .store_data (ex_mem_store_data),
+
+        .dmem_rdata (dmem_rdata),
+
+        .dmem_addr  (dmem_addr),
+        .dmem_wdata (dmem_wdata),
+        .dmem_wstrb (dmem_wstrb),
+        .dmem_req   (dmem_req),
+
+        .load_data  (mem_load_data)
+    );
+
+    // MEM WB register
+    mem_wb_reg u_mem_wb (
+        .clk            (clk),
+        .rst_n          (rst_n),
+
+        .alu_result_in  (ex_mem_alu_result),
+        .load_data_in   (mem_load_data),
+
+        .pc4_in         (ex_mem_pc4),
+        .rd_in          (ex_mem_rd),
+
+        .ctrl_in        (ex_mem_ctrl),
+        .valid_in       (ex_mem_valid),
+
+        .alu_result_out (mem_wb_alu_result),
+        .load_data_out  (mem_wb_load_data),
+
+        .pc4_out        (mem_wb_pc4),
+        .rd_out         (mem_wb_rd),
+
+        .ctrl_out       (mem_wb_ctrl),
+        .valid_out      (mem_wb_valid)
+    );
+
+    // write back
+    always_comb begin
+        unique case (mem_wb_ctrl.wb_sel)
+            WB_ALU:
+                wb_data = mem_wb_alu_result;
+
+            WB_LOAD:
+                wb_data = mem_wb_load_data;
+
+            WB_PC4:
+                wb_data = mem_wb_pc4;
+
+            default:
+                wb_data = mem_wb_alu_result;
+        endcase
+    end
 endmodule

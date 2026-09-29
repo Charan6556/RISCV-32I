@@ -1,0 +1,12 @@
+* text=auto
+*.sv text eol=lf
+*.v text eol=lf
+*.sh text eol=lf
+*.tcl text eol=lf
+*.f text eol=lf
+*.md text eol=lf
+*.png binary
+
+# Preserve the original instruction image and archived tool outputs.
+program.hex -text
+synth/reports/** -text

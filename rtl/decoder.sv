@@ -1,17 +1,5 @@
-//==============================================================================
-// decoder.sv
-//   instr -> ctrl_t. Pure combinational lookup, no state.
-//   Structure matches the paper table row-for-row so the rebuild pass is
-//   straight transcription:
-//     - default CTRL_NOP first, then override per opcode
-//     - funct3_q passed through globally (no arm needs to touch it)
-//     - inner cases ONLY on OP-IMM and OP, where alu_op varies by funct3
-//     - LOAD/STORE/BRANCH have no inner case: same ctrl fields for every
-//       funct3 within the opcode; the funct3 travels in funct3_q to the
-//       consumer (LSU or branch_cond)
-//==============================================================================
 module decoder
-  import riscv_pkg::*;
+    import riscv_pkg::*;
 (
     input  logic [31:0] instr,
     output ctrl_t       ctrl
@@ -21,29 +9,28 @@ module decoder
     // in the same bit positions across all six formats).
     logic [6:0] opcode;
     logic [2:0] funct3;
-    logic       f7_bit;   // instr[30] -- distinguishes ADD/SUB, SRL/SRA, SRLI/SRAI
+    logic       f7_bit;   // instr[30]:distinguishes ADD/SUB, SRL/SRA, SRLI/SRAI
 
     assign opcode = instr[6:0];
     assign funct3 = instr[14:12];
     assign f7_bit = instr[30];
 
     always_comb begin
-        // ---- default: NOP (all inactive) --------------------------------
+        // default: inactive controls
         ctrl          = CTRL_NOP;
         ctrl.funct3_q = funct3;   // passthrough for LSU and branch_cond;
                                   // harmless don't-care elsewhere
 
         unique case (opcode)
-
-            // -------- LUI --------
+            // LUI
             7'b0110111: begin
                 ctrl.reg_write = 1'b1;
                 ctrl.alu_src_b = 1'b1;
-                ctrl.alu_op    = ALU_PASS_B;   // D1: imm rides through the ALU
+                ctrl.alu_op    = ALU_PASS_B;   // pass the upper immediate
                 ctrl.imm_sel   = IMM_U;
             end
 
-            // -------- AUIPC --------
+            // AUIPC
             7'b0010111: begin
                 ctrl.reg_write = 1'b1;
                 ctrl.alu_src_a = 1'b1;         // pc as operand A
@@ -52,7 +39,7 @@ module decoder
                 ctrl.imm_sel   = IMM_U;
             end
 
-            // -------- JAL --------
+            // JAL
             7'b1101111: begin
                 ctrl.reg_write = 1'b1;
                 ctrl.wb_sel    = WB_PC4;       // link value = pc + 4
@@ -63,7 +50,7 @@ module decoder
                 ctrl.is_jal    = 1'b1;
             end
 
-            // -------- JALR --------
+            // JALR
             7'b1100111: begin
                 // Only funct3=000 is legal; other values fall through as NOP.
                 if (funct3 == 3'b000) begin
@@ -76,7 +63,7 @@ module decoder
                 end
             end
 
-            // -------- BRANCH (all 6 share these ctrl fields) --------
+            // BRANCH (all 6 share these ctrl fields)
             7'b1100011: begin
                 ctrl.imm_sel   = IMM_B;
                 ctrl.is_branch = 1'b1;
@@ -84,7 +71,7 @@ module decoder
                 // does the comparison using funct3_q.
             end
 
-            // -------- LOAD (all 5 share these ctrl fields) --------
+            // LOAD (all 5 share these ctrl fields)
             7'b0000011: begin
                 ctrl.reg_write = 1'b1;
                 ctrl.wb_sel    = WB_LOAD;
@@ -95,7 +82,7 @@ module decoder
                 // funct3_q (already assigned) carries the size to LSU.
             end
 
-            // -------- STORE (all 3 share these ctrl fields) --------
+            // STORE (all 3 share these ctrl fields)
             7'b0100011: begin
                 ctrl.mem_write = 1'b1;
                 ctrl.alu_src_b = 1'b1;         // address = rs1 + imm_S
@@ -104,7 +91,7 @@ module decoder
                 // funct3_q carries the size to LSU.
             end
 
-            // -------- OP-IMM (alu_op varies by funct3) --------
+            // OP-IMM (alu_op varies by funct3)
             7'b0010011: begin
                 ctrl.reg_write = 1'b1;
                 ctrl.alu_src_b = 1'b1;
@@ -127,7 +114,7 @@ module decoder
                 endcase
             end
 
-            // -------- OP (alu_op varies by funct3 + inst[30]) --------
+            // OP (alu_op varies by funct3 + inst[30])
             7'b0110011: begin
                 ctrl.reg_write = 1'b1;
                 // alu_src_a = 0 (rs1), alu_src_b = 0 (rs2) -- both are NOP defaults
@@ -146,10 +133,8 @@ module decoder
                 endcase
             end
 
-            // -------- FENCE, ECALL, EBREAK, illegal -> NOP (spec §1.1) --------
+            // unrecognized opcodes, including FENCE and SYSTEM, use inactive controls
             default: ; // ctrl already CTRL_NOP with funct3_q passthrough
-
         endcase
     end
-
 endmodule

@@ -1,24 +1,40 @@
-﻿# QuestaSim / ModelSim
+# simulator outputs
 work/
-transcript
-*.wlf
-*.vstf
-*.log
+obj_dir/
+xcelium.d/
+INCA_libs/
+waves.shm/
+*.shm/
 *.vcd
+*.fst
+.simvision/
+*.log
+*.history
+xrun.key
+transcript
 
-# Editor backups (Vim/Emacs)
-*~
-*.un~
-.*.un~
-*.swp
+# coverage and regression
+cov_work/
+*.ucd
+*.ucm
+logs/
+regression_logs/
+failed_seeds.txt
 
-# VCS / DVE
-csrc/
-simv
-simv.daidir/
-DVEfiles/
-.vlogansetup.*
+# new synthesis runs; keep the archived reports and netlists
+synth/build/
+fv/
+genus*.cmd
+.rs_*.tstamp
 
-# OS
+# editor and operating system files
 .DS_Store
-Thumbs.db
+.AppleDouble/
+__MACOSX/
+._*
+*Zone.Identifier*
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
