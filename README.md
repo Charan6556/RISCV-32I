@@ -300,6 +300,7 @@ riscv_pipeline/
 │   ├── debugging.md
 │   └── cleanup.md
 ├── program.hex             # instruction image for tb_core.sv
+├── LICENSE                 # MIT license
 ├── .gitignore
 ├── .gitattributes
 └── README.md
@@ -315,3 +316,9 @@ cd RISCV-32I
 ```
 
 The repository history retains the earlier single-cycle implementation. The current sources contain the five-stage pipeline and UVM verification environment described above.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+Copyright (c) 2026 Charan Gundepinni.
