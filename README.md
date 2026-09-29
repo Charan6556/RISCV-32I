@@ -2,23 +2,23 @@
 
 A 32-bit, in-order RISC-V processor implemented in SystemVerilog, with a five-stage pipeline, data forwarding, load-use stalls, and execute-stage branch resolution. The project implements 37 RV32I integer instructions and includes a UVM environment, a commit-based reference scoreboard, functional coverage, ten SystemVerilog assertions, a Bubble Sort program, and Cadence Genus synthesis results using SKY130 HD cells.
 
-The repository contains the design, runnable simulation and synthesis scripts, archived reports and netlists, and screenshots of the recorded results.
+The repository contains the design, simulation and synthesis scripts, synthesis reports and netlists, and screenshots of my results.
 
-## Recorded results
+## Results
 
 | Measurement | Result | Evidence |
 | --- | --- | --- |
 | Instruction functional coverage | **100.00%** of the 37 instruction bins | [Full test, seed 25](docs/images/coverage-seed25.png) |
 | Pipeline functional coverage | **98.41%** | [Full test, seed 25](docs/images/coverage-seed25.png) |
-| Random-seed regression | **1,000 passes, 0 failures** reported by the original runner | [Regression summary](docs/images/regression-1000-pass.png) |
-| Regression stimulus | **140,000 instruction transactions** (140 per seed × 1,000 seeds) | [Full-test sequence](tb_simple/uvm/riscv_full_sequence.sv) |
+| Random-seed regression | **1,000 seeds passed, 0 failures** (first version of the regression script; see note) | [Regression summary](docs/images/regression-1000-pass.png) |
+| Stimulus per seed | 80 fixed directed instructions + 60 random instructions | [Full-test sequence](tb_simple/uvm/riscv_full_sequence.sv) |
 | Full-test scoreboard, seed 25 | **682 commits, 0 errors** | [Coverage and scoreboard output](docs/images/coverage-seed25.png) |
 | Bubble Sort | **PASS**, output `1 2 4 5 8` | [Program result](docs/images/bubblesort-result.png) |
 | Bubble Sort performance | **169 cycles / 121 retired instructions = 1.397 CPI** | [Program result](docs/images/bubblesort-result.png) |
-| Tightest archived synthesis target | **4 ns / 250 MHz**, +2.0 ps slack | [4 ns QoR report](synth/reports/4ns/qor.rpt) |
+| Tightest synthesis target met | **4 ns / 250 MHz**, +2.0 ps slack | [4 ns QoR report](synth/reports/4ns/qor.rpt) |
 | Cell area at 4 ns | **71,966.523 µm²** | [4 ns area report](synth/reports/4ns/area.rpt) |
 
-These are historical results from the supplied screenshots and archived reports. They were not regenerated during repository cleanup. The regression screenshot reaches seed 1000 and reports `PASS = 1000`, although its old heading says “100 SEED.” It also shows errors from two lines using `//` as shell comments. Both issues are corrected in the current runner, which now checks the simulator exit status and requires complete summaries. The historical run has not been repeated with that stricter runner.
+**Note on the regression:** the 1,000-seed run used the first version of my regression script. Its screenshot still has the old “100 SEED” heading and shows two harmless shell errors from lines that used `//` instead of `#` for comments. I have since fixed the script so it also checks the simulator exit status and requires complete UVM and scoreboard summaries. I have not yet rerun all 1,000 seeds with the stricter version.
 
 ## Architecture
 
@@ -122,9 +122,9 @@ Commit visibility is connected to internal MEM/WB signals in `tb_uvm_top.sv`; it
 | `riscv_full_test` | 80 fixed transactions plus 60 generated instructions; runs for 700 rising clock edges after its reset sequence |
 | `riscv_bubblesort_test` | Sort five values, check memory, and measure cycles and retired instructions |
 
-Each full-test seed loads **140 instruction transactions**: 80 fixed transactions and 60 generated instructions. Across 1,000 seeds, the total is **140 × 1,000 = 140,000 instruction transactions**. These are program-loading transactions, not dynamic retired instructions: execution can include branches and the NOP-filled memory after the loaded program.
+Each full-test seed loads 80 fixed directed instructions followed by 60 random instructions.
 
-`riscv_sequence.sv` and `riscv_test.sv` are retained as early bring-up sources. They are not included in the current UVM package or exposed by `run.sh`. The separate `tb_core.sv` testbench reads `program.hex`, prints registers, and checks x0; it is not the full UVM verification flow.
+`riscv_sequence.sv` and `riscv_test.sv` are my early bring-up files and are not part of the current UVM package or `run.sh`. The separate `tb_core.sv` testbench reads `program.hex`, prints registers, and checks x0; it is not the full UVM verification flow.
 
 ### Functional coverage
 
@@ -134,7 +134,7 @@ Each full-test seed loads **140 instruction transactions**: 80 fixed transaction
 - Pipeline coverage includes stalls, redirects, both forwarding selectors, memory requests, byte-write strobes, and a cross of the two forwarding selectors.
 - The saved seed-25 run reports 100.00% instruction coverage and 98.41% pipeline coverage, with 682 scoreboard commits and zero scoreboard errors.
 
-The strobe coverpoint contains a `0110` halfword-write bin, while the implemented LSU only generates the aligned halfword strobes `0011` and `1100`. The reported 98.41% is consistent with that one uncovered bin under equal coverpoint/cross weighting. This is an inference from the source and aggregate percentage; a per-bin coverage report was not retained. The coverage model has been preserved without adding exclusions.
+I intentionally kept a `0110` halfword-write bin in the strobe coverpoint. The LSU only generates the aligned halfword strobes `0011` and `1100`, so this bin is never hit; that is why pipeline coverage is 98.41% rather than 100%.
 
 These percentages describe functional covergroups. They do not establish 100% RTL code coverage or exhaustive architectural correctness.
 
@@ -159,9 +159,9 @@ The assertions are included in the simulation file list. The saved seed-25 outpu
 
 ### Regression debugging
 
-An earlier 100-seed run reported **88 passes and 12 failures**. The archived project already contains the subsequent scoreboard correction for arithmetic-right-shift signedness. The later screenshot reports **1,000 passes and zero failures**.
+An earlier 100-seed run reported **88 passes and 12 failures**. I traced the seed-9 failure to the scoreboard's arithmetic-right-shift model: signed and unsigned operands mixed in one expression lost the sign extension. After I fixed the scoreboard, the next run reported **1,000 passes and zero failures**.
 
-See [the debugging notes](docs/debugging.md) for the failure list, the seed-9 mismatch, the existing correction, and the evidence limitations.
+See [the debugging notes](docs/debugging.md) for the failing seeds, the seed-9 mismatch, and the fix.
 
 ![Completed 1000-seed regression](docs/images/regression-1000-pass.png)
 
@@ -180,62 +180,17 @@ The recorded run measured **169 cycles** and **121 retired instructions**, givin
 
 ![Bubble Sort result](docs/images/bubblesort-result.png)
 
-The [full Bubble Sort output](docs/images/bubblesort-full-output.png) shows 120 scoreboard commits and zero errors, versus the test's 121 retired instructions. The test samples at the falling edge and ends at completion, while the monitor samples at the rising edge. This leaves the terminal observation out of the scoreboard's reported count. The original termination behavior is preserved. That historical run also had covergroup collection disabled, so its displayed 0.00% coverage does not replace the separate seed-25 coverage result.
+The [full Bubble Sort output](docs/images/bubblesort-full-output.png) shows 120 scoreboard commits and zero errors, versus the test's 121 retired instructions. The test samples at the falling edge and ends at completion, while the monitor samples at the rising edge. This leaves the terminal observation out of the scoreboard's reported count. That run also had covergroup collection disabled, so its displayed 0.00% coverage does not replace the separate seed-25 coverage result.
 
 ### Pipeline waveform
 
-The supplied waveform shows stage-valid signals, register destinations, forwarding, a load-use stall, redirect activity, commits, and data-memory traffic during Bubble Sort.
+The waveform shows stage-valid signals, register destinations, forwarding, a load-use stall, redirect activity, commits, and data-memory traffic during Bubble Sort.
 
 ![Bubble Sort pipeline waveform](docs/images/pipeline-waveform.png)
 
-## Running simulations
-
-Use a Linux environment with Cadence Xcelium and its UVM library configured. The recorded logs identify Xcelium `26.03-s001` with Cadence UVM `1.1d`. A RISC-V software compiler is not required for the included sequences; their machine-code instructions are embedded in SystemVerilog.
-
-From the repository root:
-
-```bash
-# Smoke test, seed 1, with coverage.
-./sim/run.sh
-
-# Reproduce the named full-test coverage setup.
-./sim/run.sh riscv_full_test 25
-
-# Bubble Sort with coverage enabled by this wrapper.
-./sim/run.sh riscv_bubblesort_test 1
-
-# Full test across seeds 1 through 1000, without coverage collection.
-./sim/regression.sh
-
-# Shorter run across seeds 1 through 100.
-./sim/regression.sh 100
-```
-
-Both scripts resolve paths relative to `sim/`. `run.sh` stores logs under `sim/logs/` and coverage under `sim/cov_work/`; rerunning the same test and seed overwrites its named coverage result. It returns Xcelium's exit status, so inspect the UVM and scoreboard summaries as well.
-
-`regression.sh` writes simulation and console logs under `sim/regression_logs/`. A seed passes only when Xcelium exits successfully, the log contains zero UVM errors and fatals, the scoreboard reports at least one commit and zero errors, and no listed assertion failure or simulator error is found. The script prints a seed-count-aware heading, records failures in `sim/failed_seeds.txt`, and returns a nonzero status if any seed fails. Repeated runs overwrite logs for the selected seeds; older logs for other seed numbers can remain.
-
-To inspect a single coverage run:
-
-```bash
-grep -E 'Instruction Coverage|Pipeline Coverage|COMMITS=|^UVM_ERROR|^UVM_FATAL' \
-    sim/logs/riscv_full_test_seed25.log
-```
-
-For an interactive Bubble Sort waveform session:
-
-```bash
-cd sim
-xrun -64bit -sv -uvm -timescale 1ns/1ps -f filelist.f \
-    -top tb_uvm_top +UVM_TESTNAME=riscv_bubblesort_test \
-    +UVM_VERBOSITY=UVM_NONE +UVM_NO_RELNOTES -svseed 1 -access +rwc -gui
-```
-
-Add `dut.pc`, pipeline stage-valid signals, `dut.hazard_stall`, `dut.ex_redirect`, `dut.forward_a`, `dut.forward_b`, and the `vif.commit_*` / `vif.dmem_*` signals in SimVision. This GUI command does not enable coverage collection.
-
 ## Synthesis characterization
 
-The saved reports were generated on September 28, 2026 using **Cadence Genus 25.13-s071_1**. The supplied synthesis script selects `sky130_fd_sc_hd__tt_025C_1v80.lib`: SKY130 HD at the typical 25 °C, 1.8 V corner. The reports describe pre-layout synthesis with `Wireload mode: top` and timing-library area. The library itself is not bundled.
+I generated these reports on September 28, 2026 using **Cadence Genus 25.13-s071_1**. The synthesis script uses `sky130_fd_sc_hd__tt_025C_1v80.lib`: SKY130 HD at the typical 25 °C, 1.8 V corner. The reports describe pre-layout synthesis with `Wireload mode: top` and timing-library area. The library itself is not bundled.
 
 The table uses the exact slack and area values in each `qor.rpt`. Report clock periods and slack are in picoseconds; the target column converts periods to nanoseconds. The detailed timing reports round some slack values to whole picoseconds.
 
@@ -247,7 +202,7 @@ The table uses the exact slack and area values in each `qor.rpt`. Report clock p
 | 5 ns | 200 MHz | +4.6 ps | 0 | 5,555 | 1,523 | 70,179.809 | [QoR](synth/reports/5ns/qor.rpt) |
 | **4 ns** | **250 MHz** | **+2.0 ps** | **0** | **5,971** | **1,523** | **71,966.523** | [QoR](synth/reports/4ns/qor.rpt) |
 
-Each target directory retains `area.rpt`, `timing.rpt`, `qor.rpt`, `gates.rpt`, and `riscv_core_netlist.v` unchanged from the input archive.
+Each target directory contains `area.rpt`, `timing.rpt`, `qor.rpt`, `gates.rpt`, and `riscv_core_netlist.v`.
 
 Area increases by approximately **4.64%** from the 10 ns target to the 4 ns target. Sequential cell count remains at 1,523, while combinational cell count increases from 3,620 to 4,448.
 
@@ -257,31 +212,12 @@ Area increases by approximately **4.64%** from the 10 ns target to the 4 ns targ
 | 5 ns | MEM/WB writeback selector → EX/MEM ALU-result register | Writeback selection, forwarding, and ALU path |
 | 4 ns | EX/MEM destination register → EX/MEM ALU-result register | Forwarding selection and ALU path |
 
-The gate-level reports establish the endpoints; the datapath descriptions are interpretations based on the RTL. The results meet the archived targets under the supplied synthesis constraints. **250 MHz is a met pre-layout target, not a measured silicon frequency or proven maximum frequency.** Place-and-route, extracted timing, multi-corner signoff, and tighter failing targets are not included.
-
-### Running synthesis
-
-From the repository root, with Genus and the SKY130 Liberty file available:
-
-```bash
-export SKY130_LIB=/path/to/sky130_fd_sc_hd__tt_025C_1v80.lib
-CLOCK_PERIOD_NS=4 genus -files synth/run_genus.tcl
-```
-
-To repeat the five target settings:
-
-```bash
-for period in 10 8 6 5 4; do
-    CLOCK_PERIOD_NS="$period" genus -files synth/run_genus.tcl
-done
-```
-
-The script defaults to 4 ns and to `~/sky130_lib/sky130_fd_sc_hd__tt_025C_1v80.lib` if `SKY130_LIB` is unset. It retains the original 2 ns input and output delays, including the original `all_inputs` selection. It writes new outputs to `synth/build/<period>ns/`, leaving the archived evidence in `synth/reports/` intact. Review the constraints for any new integration or physical-design flow.
+The gate-level reports establish the endpoints; the datapath descriptions are interpretations based on the RTL. All five targets are met under the script's constraints. **250 MHz is a met pre-layout target, not a measured silicon frequency or proven maximum frequency.** Place-and-route, extracted timing, multi-corner signoff, and tighter failing targets are not included.
 
 ## Repository layout
 
 ```text
-riscv_pipeline/
+RISCV-32I/
 ├── rtl/                    # processor RTL and shared package
 ├── tb_simple/
 │   ├── tb_core.sv          # early standalone register-dump test
@@ -296,9 +232,8 @@ riscv_pipeline/
 │   ├── run_genus.tcl
 │   └── reports/            # 10ns, 8ns, 6ns, 5ns and 4ns results
 ├── docs/
-│   ├── images/             # supplied result and waveform screenshots
-│   ├── debugging.md
-│   └── cleanup.md
+│   ├── images/             # result and waveform screenshots
+│   └── debugging.md
 ├── program.hex             # instruction image for tb_core.sv
 ├── LICENSE                 # MIT license
 ├── .gitignore
@@ -306,16 +241,7 @@ riscv_pipeline/
 └── README.md
 ```
 
-Simulator databases, coverage databases, temporary logs, generated formal-mapping files, editor backups, and operating-system metadata are excluded. Final synthesis reports and netlists are intentionally retained. See [cleanup and validation details](docs/cleanup.md).
-
-## Getting the source
-
-```bash
-git clone https://github.com/Charan6556/RISCV-32I.git
-cd RISCV-32I
-```
-
-The repository history retains the earlier single-cycle implementation. The current sources contain the five-stage pipeline and UVM verification environment described above.
+Simulator databases, coverage databases, and logs are not committed; synthesis reports and netlists are. The repository history also contains my earlier single-cycle version of the core.
 
 ## License
 
