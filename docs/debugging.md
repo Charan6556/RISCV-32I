@@ -45,6 +45,6 @@ NONE
 
 ![Regression summary after the fix](images/regression-1000-pass.png)
 
-That run used the first version of my regression script. It covered seeds 1–1000; the screenshot heading still says “100 SEED” only because I forgot to update the label when I raised the seed count. The screenshot also shows `//: Is a directory` messages from two comment lines written with `//` instead of Bash's `#`. Those messages were harmless and unrelated to the scoreboard bug.
+That run used the first version of my regression script, which checked each seed's UVM errors and assertion messages. The screenshot also shows `//: Is a directory` messages from two comment lines written with `//` instead of Bash's `#`. Those messages were harmless and unrelated to the scoreboard bug.
 
 I have since improved the script: it uses valid comments, derives its heading from the seed count, removes stale logs before each run, checks Xcelium's exit status, requires complete UVM and scoreboard summaries, and checks for assertion failures and simulator errors. I have not yet rerun all 1,000 seeds with this stricter version.
