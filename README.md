@@ -18,7 +18,7 @@ The repository contains the design, simulation and synthesis scripts, synthesis 
 | Tightest synthesis target met | **4 ns / 250 MHz**, +2.0 ps slack | [4 ns QoR report](synth/reports/4ns/qor.rpt) |
 | Cell area at 4 ns | **71,966.523 µm²** | [4 ns area report](synth/reports/4ns/area.rpt) |
 
-**Note on the regression:** the 1,000-seed run used the first version of my regression script. The run covered seeds 1–1000; the screenshot heading still says “100 SEED” only because I forgot to update the label when I raised the seed count. It also shows two harmless shell errors from lines that used `//` instead of `#` for comments. I have since fixed the script so it also checks the simulator exit status and requires complete UVM and scoreboard summaries. I have not yet rerun all 1,000 seeds with the stricter version.
+**Note on the regression:** the 1,000-seed run used the first version of my regression script, which checked each seed's UVM errors and assertion messages. Its output also shows two harmless shell errors from lines that used `//` instead of `#` for comments. I have since fixed the script so it also checks the simulator exit status and requires complete UVM and scoreboard summaries. I have not yet rerun all 1,000 seeds with the stricter version.
 
 ## Architecture
 
