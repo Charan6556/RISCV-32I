@@ -1,0 +1,436 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2100 1180" width="2100" height="1180">
+<defs>
+<marker id="a_data" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#111827"/></marker>
+<marker id="a_ctrl" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d64d8"/></marker>
+<marker id="a_fwd" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+<marker id="a_haz" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#15803d"/></marker>
+<marker id="a_wb" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7e22ce"/></marker>
+</defs>
+<rect width="2100" height="1180" fill="#ffffff"/>
+<rect x="24" y="14" width="428" height="60" fill="#d7e8f7" stroke="none"/>
+<text x="238.0" y="40" font-size="24" fill="#0b1f33" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', Times, serif" font-weight="bold">IF</text>
+<text x="238.0" y="63" font-size="16" fill="#0b1f33" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', Times, serif">(Instruction Fetch)</text>
+<rect x="468" y="14" width="468" height="60" fill="#d7e8f7" stroke="none"/>
+<text x="702.0" y="40" font-size="24" fill="#0b1f33" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', Times, serif" font-weight="bold">ID</text>
+<text x="702.0" y="63" font-size="16" fill="#0b1f33" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', Times, serif">(Instruction Decode)</text>
+<rect x="952" y="14" width="560" height="60" fill="#d7e8f7" stroke="none"/>
+<text x="1232.0" y="40" font-size="24" fill="#0b1f33" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', Times, serif" font-weight="bold">EX</text>
+<text x="1232.0" y="63" font-size="16" fill="#0b1f33" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', Times, serif">(Execute)</text>
+<rect x="1528" y="14" width="364" height="60" fill="#d7e8f7" stroke="none"/>
+<text x="1710.0" y="40" font-size="24" fill="#0b1f33" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', Times, serif" font-weight="bold">MEM</text>
+<text x="1710.0" y="63" font-size="16" fill="#0b1f33" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', Times, serif">(Memory Access)</text>
+<rect x="1908" y="14" width="168" height="60" fill="#d7e8f7" stroke="none"/>
+<text x="1992.0" y="40" font-size="24" fill="#0b1f33" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', Times, serif" font-weight="bold">WB</text>
+<text x="1992.0" y="63" font-size="16" fill="#0b1f33" text-anchor="middle" font-family="'Times New Roman', 'Liberation Serif', Times, serif">(Write Back)</text>
+<line x1="460" y1="14" x2="460" y2="1000" stroke="#9aa5b1" stroke-width="1.2" stroke-dasharray="6 5"/>
+<line x1="944" y1="14" x2="944" y2="1000" stroke="#9aa5b1" stroke-width="1.2" stroke-dasharray="6 5"/>
+<line x1="1520" y1="14" x2="1520" y2="1000" stroke="#9aa5b1" stroke-width="1.2" stroke-dasharray="6 5"/>
+<line x1="1900" y1="14" x2="1900" y2="1000" stroke="#9aa5b1" stroke-width="1.2" stroke-dasharray="6 5"/>
+<polygon points="50,150 76,160 76,230 50,240" fill="#eef2f7" stroke="#111827" stroke-width="1.5"/>
+<text x="53" y="173.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">10</text>
+<text x="53" y="198.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">01</text>
+<text x="53" y="223.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">00</text>
+<rect x="110" y="305" width="60" height="60" rx="3" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="140.0" y="334.75" font-size="15" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">PC</text>
+<text x="140.0" y="347.25" font-size="9.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">pc_unit</text>
+<rect x="216" y="420" width="110" height="90" rx="3" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="271.0" y="455.5" font-size="12.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Instruction</text>
+<text x="271.0" y="471.0" font-size="12.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Memory</text>
+<text x="271.0" y="484.0" font-size="10" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">(external)</text>
+<polygon points="220,540 260,555.0 260,585.0 220,600 220,577.2 228.8,570.0 220,562.8" fill="#ffffff" stroke="#111827" stroke-width="1.5"/>
+<text x="244.0" y="576.0" font-size="17" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">+</text>
+<path d="M1395,150 L1395,92 L30,92 L30,170 L50,170" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1285,150 L1285,108 L38,108 L38,195 L50,195" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1210,160 L1210,124 L63,124 L63,155.0" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<path d="M1170,160 L1170,140 L446,140 L446,258" fill="none" stroke="#15803d" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_haz)"/>
+<path d="M932,140 L932,258" fill="none" stroke="#15803d" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_haz)"/>
+<circle cx="932" cy="140" r="3.2" fill="#15803d"/>
+<path d="M76,195 L92,195 L92,335 L110,335" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="97" y="262" font-size="10" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">next_pc</text>
+<path d="M170,335 L200,335 L200,555 L220,555" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M200,386 L360,386" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M200,465 L216,465" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="200" cy="386" r="3.2" fill="#111827"/>
+<circle cx="200" cy="465" r="3.2" fill="#111827"/>
+<text x="176" y="329" font-size="11" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">pc</text>
+<text x="271" y="527" font-size="9" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">imem_addr = pc</text>
+<path d="M326,465 L360,465" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M204,585 L220,585" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="196" y="589" font-size="13" fill="#111827" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">4</text>
+<path d="M260,570 L340,570 L340,354 L360,354" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M300,570 L300,640 L22,640 L22,220 L50,220" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="300" cy="570" r="3.2" fill="#111827"/>
+<text x="266" y="564" font-size="10.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">pc4</text>
+<path d="M338,322 L360,322" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="333" y="326" font-size="12" fill="#111827" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">1</text>
+<rect x="360" y="258" width="96" height="552" fill="#cfe3f6" stroke="#2b5b8a" stroke-width="1.6"/>
+<text x="408.0" y="250" font-size="15" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">IF/ID</text>
+<rect x="364" y="310" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="408.0" y="326" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">if_id_valid</text>
+<rect x="364" y="342" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="408.0" y="358" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">if_id_pc4</text>
+<rect x="364" y="374" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="408.0" y="390" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">if_id_pc</text>
+<rect x="364" y="453" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="408.0" y="469" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">if_id_instr</text>
+<text x="442" y="206" font-size="9.5" fill="#15803d" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">if_id_flush</text>
+<path d="M640,985 L140,985 L140,365" fill="none" stroke="#15803d" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_haz)"/>
+<path d="M408,985 L408,810" fill="none" stroke="#15803d" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_haz)"/>
+<path d="M640,985 L890,985 L890,810" fill="none" stroke="#15803d" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_haz)"/>
+<circle cx="408" cy="985" r="3.2" fill="#15803d"/>
+<circle cx="640" cy="985" r="3.2" fill="#15803d"/>
+<text x="146" y="950" font-size="10" fill="#15803d" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">pc_en = !hazard_stall</text>
+<text x="412" y="950" font-size="10" fill="#15803d" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">if_id_stall</text>
+<text x="886" y="831" font-size="9.5" fill="#15803d" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">id_ex_flush (bubble)</text>
+<text x="560" y="979" font-size="10.5" fill="#15803d" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">hazard_stall</text>
+<text x="474" y="89" font-size="10" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">jalr_target</text>
+<text x="474" y="105" font-size="10" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">br_jal_target</text>
+<text x="474" y="121" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">pc_sel[1:0]</text>
+<text x="474" y="137" font-size="10" fill="#15803d" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">ex_redirect</text>
+<text x="928" y="206" font-size="9.5" fill="#15803d" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">id_ex_flush</text>
+<path d="M456,465 L492,465" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt"/>
+<path d="M492,465 L492,190 L520,190" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M492,465 L492,925 L560,925" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="492" cy="465" r="3.2" fill="#111827"/>
+<text x="484" y="640" font-size="10" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round" transform="rotate(-90 484 640)">if_id_instr[31:0]</text>
+<path d="M492,447 L560,447" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="492" cy="447" r="3.2" fill="#111827"/>
+<text x="498" y="443" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">[19:15]</text>
+<path d="M492,577 L560,577" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="492" cy="577" r="3.2" fill="#111827"/>
+<text x="498" y="573" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">[24:20]</text>
+<path d="M492,695 L545,695" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="492" cy="695" r="3.2" fill="#111827"/>
+<text x="498" y="691" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">[31:0]</text>
+<path d="M492,730 L844,730" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="492" cy="730" r="3.2" fill="#111827"/>
+<text x="498" y="726" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">[19:15] rs1</text>
+<path d="M492,760 L844,760" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="492" cy="760" r="3.2" fill="#111827"/>
+<text x="498" y="756" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">[24:20] rs2</text>
+<path d="M492,790 L844,790" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="492" cy="790" r="3.2" fill="#111827"/>
+<text x="498" y="786" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">[11:7] rd</text>
+<path d="M492,895 L560,895" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="492" cy="895" r="3.2" fill="#111827"/>
+<text x="498" y="891" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">rs1</text>
+<rect x="520" y="160" width="100" height="60" rx="3" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="570.0" y="195.5" font-size="14" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Decoder</text>
+<path d="M575,220 L575,290 L844,290" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<text x="582" y="285" font-size="10.5" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">id_ctrl</text>
+<rect x="638" y="150" width="198" height="120" rx="4" fill="#f5f9ff" stroke="#9cc0ef" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="737" y="166" font-size="10.5" fill="#1d64d8" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">id_ctrl fields (ctrl_t)</text>
+<text x="648" y="184" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">reg_write</text>
+<text x="744" y="184" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">alu_src_b</text>
+<text x="648" y="199" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">wb_sel[1:0]</text>
+<text x="744" y="199" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">alu_op[3:0]</text>
+<text x="648" y="214" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">mem_read</text>
+<text x="744" y="214" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">imm_sel[2:0]</text>
+<text x="648" y="229" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">mem_write</text>
+<text x="744" y="229" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">is_branch</text>
+<text x="648" y="244" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">funct3_q[2:0]</text>
+<text x="744" y="244" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">is_jal</text>
+<text x="648" y="259" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">alu_src_a</text>
+<text x="744" y="259" font-size="10" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">is_jalr</text>
+<path d="M620,190 L638,190" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt"/>
+<path d="M535,220 L535,665 L545,665" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<text x="539" y="236" font-size="9.5" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">imm_sel</text>
+<rect x="560" y="425" width="160" height="185" rx="3" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="640.0" y="509.5" font-size="14" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Register File</text>
+<text x="640.0" y="523.0" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">32 x 32-bit</text>
+<text x="640.0" y="536.5" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">x0 = 0</text>
+<text x="566" y="451" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">rs1</text>
+<text x="566" y="581" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">rs2</text>
+<text x="714" y="441" font-size="9.5" fill="#111827" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">rs1_data</text>
+<text x="714" y="571" font-size="9.5" fill="#111827" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">rs2_data</text>
+<text x="676" y="604" font-size="8.5" fill="#7e22ce" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">rd, we</text>
+<text x="716" y="604" font-size="8.5" fill="#7e22ce" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">wd</text>
+<path d="M720,447 L760,447" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M720,577 L760,577" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<polygon points="760,435 784,443 784,477 760,485" fill="#eef2f7" stroke="#111827" stroke-width="1.5"/>
+<text x="763" y="450.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">0</text>
+<text x="763" y="476.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">1</text>
+<polygon points="760,565 784,573 784,607 760,615" fill="#eef2f7" stroke="#111827" stroke-width="1.5"/>
+<text x="763" y="580.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">0</text>
+<text x="763" y="606.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">1</text>
+<path d="M784,460 L844,460" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M784,590 L844,590" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="790" y="454" font-size="9" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">rs1 value</text>
+<text x="790" y="584" font-size="9" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">rs2 value</text>
+<path d="M772,418 L772,439.0" fill="none" stroke="#7e22ce" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_wb)"/>
+<path d="M772,548 L772,569.0" fill="none" stroke="#7e22ce" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_wb)"/>
+<text x="776" y="420" font-size="8.5" fill="#7e22ce" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">WB hit</text>
+<text x="776" y="550" font-size="8.5" fill="#7e22ce" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">WB hit</text>
+<text x="790" y="512" font-size="9.5" fill="#7e22ce" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">WB -&gt; ID</text>
+<text x="790" y="525" font-size="9.5" fill="#7e22ce" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">bypass</text>
+<rect x="545" y="650" width="110" height="60" rx="3" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="600.0" y="677.0" font-size="12.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Immediate</text>
+<text x="600.0" y="692.5" font-size="12.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">Generator</text>
+<path d="M655,680 L844,680" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="790" y="675" font-size="10" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">imm</text>
+<rect x="560" y="875" width="160" height="80" rx="10" fill="#ffffff" stroke="#15803d" stroke-width="2"/>
+<text x="640.0" y="905.5" font-size="13" fill="#15803d" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Hazard Detection</text>
+<text x="640.0" y="921.5" font-size="13" fill="#15803d" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Unit</text>
+<text x="640.0" y="934.5" font-size="10" fill="#15803d" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">load-use check</text>
+<path d="M640,955 L640,985" fill="none" stroke="#15803d" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt"/>
+<text x="498" y="921" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">rs2</text>
+<path d="M952,790 L952,905 L720,905" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="952" cy="790" r="3.2" fill="#111827"/>
+<text x="836" y="886" font-size="9.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">id_ex_rd,</text>
+<text x="836" y="899" font-size="9" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">id_ex_ctrl.mem_read &amp; id_ex_valid</text>
+<path d="M456,322 L844,322" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M456,354 L844,354" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M456,386 L844,386" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<rect x="844" y="258" width="96" height="552" fill="#cfe3f6" stroke="#2b5b8a" stroke-width="1.6"/>
+<text x="892.0" y="250" font-size="15" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">ID/EX</text>
+<rect x="848" y="278" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="892.0" y="294" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">id_ex_ctrl</text>
+<rect x="848" y="310" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="892.0" y="326" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">id_ex_valid</text>
+<rect x="848" y="342" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="892.0" y="358" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">id_ex_pc4</text>
+<rect x="848" y="374" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="892.0" y="390" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">id_ex_pc</text>
+<rect x="848" y="448" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="892.0" y="464" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">id_ex_rs1_data</text>
+<rect x="848" y="578" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="892.0" y="594" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">id_ex_rs2_data</text>
+<rect x="848" y="668" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="892.0" y="684" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">id_ex_imm</text>
+<rect x="848" y="718" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="892.0" y="734" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">id_ex_rs1</text>
+<rect x="848" y="748" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="892.0" y="764" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">id_ex_rs2</text>
+<rect x="848" y="778" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="892.0" y="794" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">id_ex_rd</text>
+<path d="M940,290 L1420,290" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<path d="M940,322 L1420,322" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M940,354 L1420,354" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M940,790 L1420,790" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M940,386 L1205,386 L1205,420 L1225,420" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M940,460 L985,460" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M940,590 L1025,590" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M940,680 L1205,680 L1205,640 L1225,640" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M940,730 L1080,730 L1080,875" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M940,760 L1110,760 L1110,875" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="1076" y="870" font-size="9" fill="#111827" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">rs1</text>
+<text x="1106" y="870" font-size="9" fill="#111827" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">rs2</text>
+<polygon points="985,440 1011,452 1011,508 985,520" fill="#eef2f7" stroke="#111827" stroke-width="1.5"/>
+<text x="988" y="463.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">00</text>
+<text x="988" y="483.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">01</text>
+<text x="988" y="503.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">10</text>
+<polygon points="1025,570 1051,582 1051,638 1025,650" fill="#eef2f7" stroke="#111827" stroke-width="1.5"/>
+<text x="1028" y="593.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">00</text>
+<text x="1028" y="613.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">01</text>
+<text x="1028" y="633.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">10</text>
+<path d="M958,838 L958,480 L985,480" fill="none" stroke="#7e22ce" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_wb)"/>
+<path d="M958,610 L1025,610" fill="none" stroke="#7e22ce" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_wb)"/>
+<circle cx="958" cy="610" r="3.2" fill="#7e22ce"/>
+<path d="M1575,430 L1590,430 L1590,822 L972,822 L972,500 L985,500" fill="none" stroke="#dc2626" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_fwd)"/>
+<path d="M972,630 L1025,630" fill="none" stroke="#dc2626" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_fwd)"/>
+<circle cx="972" cy="630" r="3.2" fill="#dc2626"/>
+<text x="1250" y="817" font-size="10" fill="#dc2626" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">ex_mem_fwd_data (ALU result or PC+4)</text>
+<path d="M998,875 L998,514.0" fill="none" stroke="#dc2626" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_fwd)"/>
+<path d="M1038,875 L1038,644.0" fill="none" stroke="#dc2626" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_fwd)"/>
+<text x="1002" y="541" font-size="9.5" fill="#dc2626" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">forward_a</text>
+<text x="1042" y="667" font-size="9.5" fill="#dc2626" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">forward_b</text>
+<path d="M1011,480 L1225,480" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1058,480 L1058,222" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="1058" cy="480" r="3.2" fill="#111827"/>
+<text x="1014" y="474" font-size="9" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">rs1_fwd</text>
+<path d="M1051,610 L1070,610" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt"/>
+<path d="M1070,610 L1070,222" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1070,580 L1225,580" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1070,610 L1070,720 L1420,720" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="1070" cy="580" r="3.2" fill="#111827"/>
+<circle cx="1070" cy="610" r="3.2" fill="#111827"/>
+<text x="1076" y="574" font-size="9" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">rs2_fwd</text>
+<text x="1054" y="262" font-size="9.5" fill="#111827" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">rs1_fwd, rs2_fwd</text>
+<polygon points="1225,400 1250,410 1250,490 1225,500" fill="#eef2f7" stroke="#111827" stroke-width="1.5"/>
+<text x="1228" y="423.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">1</text>
+<text x="1228" y="483.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">0</text>
+<polygon points="1225,560 1250,570 1250,650 1225,660" fill="#eef2f7" stroke="#111827" stroke-width="1.5"/>
+<text x="1228" y="583.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">0</text>
+<text x="1228" y="643.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">1</text>
+<polygon points="1290,420 1355,470 1355,590 1290,640 1290,555 1305,530 1290,505" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="1327.5" y="536" font-size="16" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">ALU</text>
+<path d="M1250,450 L1290,450" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1250,610 L1290,610" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1355,530 L1420,530" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="1358" y="525" font-size="8.6" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">ex_alu_result</text>
+<text x="1250" y="715" font-size="10" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">store data (rs2_fwd)</text>
+<text x="1250" y="785" font-size="10" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">id_ex_rd</text>
+<path d="M1237,290 L1237,404.8" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<circle cx="1237" cy="290" r="3.2" fill="#1d64d8"/>
+<text x="1233" y="311" font-size="9" fill="#1d64d8" text-anchor="end" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">alu_src_a</text>
+<path d="M1270,290 L1270,548 L1237,548 L1237,564.8" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<circle cx="1270" cy="290" r="3.2" fill="#1d64d8"/>
+<text x="1273" y="311" font-size="9" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">alu_src_b</text>
+<path d="M1325,290 L1325,446.9230769230769" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<circle cx="1325" cy="290" r="3.2" fill="#1d64d8"/>
+<text x="1328" y="311" font-size="9" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">alu_op[3:0]</text>
+<rect x="1040" y="160" width="72" height="62" rx="3" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="1076.0" y="182.1" font-size="11.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Branch</text>
+<text x="1076.0" y="196.6" font-size="11.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Compare</text>
+<text x="1076.0" y="208.4" font-size="8.8" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">(branch_cond)</text>
+<path d="M1092,290 L1092,222" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<circle cx="1092" cy="290" r="3.2" fill="#1d64d8"/>
+<text x="1095" y="246" font-size="9" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">funct3_q</text>
+<text x="1095" y="258" font-size="9" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">is_branch</text>
+<path d="M1112,191 L1140,191" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="1126" y="185" font-size="8.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">taken</text>
+<rect x="1140" y="160" width="82" height="62" rx="3" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="1181.0" y="183.0" font-size="12" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">PC Select</text>
+<text x="1181.0" y="195.5" font-size="9.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">pc_sel,</text>
+<text x="1181.0" y="208.0" font-size="9.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">ex_redirect</text>
+<path d="M1160,322 L1160,222" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="1160" cy="322" r="3.2" fill="#111827"/>
+<path d="M1195,290 L1195,222" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<circle cx="1195" cy="290" r="3.2" fill="#1d64d8"/>
+<text x="1163" y="272" font-size="9" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">valid</text>
+<text x="1198" y="240" font-size="9" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">is_jal</text>
+<text x="1198" y="252" font-size="9" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">is_jalr</text>
+<text x="1198" y="264" font-size="9" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">is_branch</text>
+<rect x="1250" y="150" width="164" height="72" rx="3" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="1332.0" y="177.5" font-size="12" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Target Adders</text>
+<text x="1332.0" y="190.5" font-size="10" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">br_jal = id_ex_pc + imm</text>
+<text x="1332.0" y="203.5" font-size="10" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">jalr = (rs1_fwd + imm) &amp; ~1</text>
+<path d="M1268,246 L1268,222" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="1268" y="258" font-size="9" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">id_ex_pc</text>
+<path d="M1332,246 L1332,222" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="1332" y="258" font-size="9" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">id_ex_imm</text>
+<path d="M1398,246 L1398,222" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="1398" y="258" font-size="9" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">rs1_fwd</text>
+<text x="1290" y="105" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">br_jal_target</text>
+<text x="1400" y="89" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">jalr_target</text>
+<text x="1174" y="137" font-size="9.5" fill="#15803d" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">ex_redirect</text>
+<text x="1214" y="121" font-size="9.5" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">pc_sel</text>
+<rect x="985" y="875" width="185" height="80" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+<text x="1077.5" y="914.25" font-size="14" fill="#dc2626" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Forwarding Unit</text>
+<text x="1077.5" y="926.75" font-size="9.5" fill="#dc2626" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">EX/MEM first, then MEM/WB</text>
+<path d="M1535,790 L1535,915 L1170,915" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="1535" cy="790" r="3.2" fill="#111827"/>
+<text x="1180" y="909" font-size="10" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">ex_mem_rd, ex_mem_reg_write*</text>
+<path d="M1150,852 L1150,875" fill="none" stroke="#7e22ce" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_wb)"/>
+<circle cx="1150" cy="852" r="3.2" fill="#7e22ce"/>
+<text x="1155" y="869" font-size="8.5" fill="#7e22ce" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">mem_wb_rd, wb_we</text>
+<rect x="1420" y="258" width="96" height="552" fill="#cfe3f6" stroke="#2b5b8a" stroke-width="1.6"/>
+<text x="1468.0" y="250" font-size="15" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">EX/MEM</text>
+<rect x="1424" y="278" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1468.0" y="294" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">ex_mem_ctrl</text>
+<rect x="1424" y="310" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1468.0" y="326" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">ex_mem_valid</text>
+<rect x="1424" y="342" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1468.0" y="358" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">ex_mem_pc4</text>
+<rect x="1424" y="518" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1468.0" y="534" font-size="9.15032679738562" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">ex_mem_alu_result</text>
+<rect x="1424" y="708" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1468.0" y="724" font-size="9.15032679738562" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">ex_mem_store_data</text>
+<rect x="1424" y="778" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1468.0" y="794" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">ex_mem_rd</text>
+<path d="M1516,290 L1800,290" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<path d="M1516,322 L1800,322" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1516,354 L1800,354" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1516,530 L1800,530" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1516,790 L1800,790" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<polygon points="1550,390 1575,400 1575,460 1550,470" fill="#eef2f7" stroke="#111827" stroke-width="1.5"/>
+<text x="1553" y="413.5" font-size="8" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">PC4</text>
+<text x="1553" y="453.5" font-size="8" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">ALU</text>
+<path d="M1532,354 L1532,410 L1550,410" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="1532" cy="354" r="3.2" fill="#111827"/>
+<path d="M1542,530 L1542,450 L1550,450" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="1542" cy="530" r="3.2" fill="#111827"/>
+<path d="M1567,290 L1567,396.8" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<circle cx="1567" cy="290" r="3.2" fill="#1d64d8"/>
+<text x="1571" y="311" font-size="9" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">wb_sel</text>
+<text x="1553" y="381" font-size="9" fill="#dc2626" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">fwd select</text>
+<rect x="1615" y="560" width="110" height="95" rx="3" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="1670.0" y="600.5" font-size="14" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">LSU</text>
+<text x="1670.0" y="613.0" font-size="9.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">byte lanes, WSTRB</text>
+<text x="1670.0" y="625.5" font-size="9.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">load sign/zero-ext</text>
+<path d="M1600,530 L1600,580 L1615,580" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<circle cx="1600" cy="530" r="3.2" fill="#111827"/>
+<text x="1603" y="574" font-size="8.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">addr</text>
+<path d="M1516,720 L1605,720 L1605,640 L1615,640" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1680,290 L1680,560" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<circle cx="1680" cy="290" r="3.2" fill="#1d64d8"/>
+<text x="1684" y="336" font-size="9" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">funct3_q,</text>
+<text x="1684" y="348" font-size="9" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">mem_read/write &amp; valid</text>
+<path d="M1725,600 L1800,600" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="1731" y="595" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">load_data</text>
+<rect x="1615" y="690" width="110" height="70" rx="3" fill="#ffffff" stroke="#111827" stroke-width="1.6"/>
+<text x="1670.0" y="718.0" font-size="12" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">Data Memory</text>
+<text x="1670.0" y="729.5" font-size="8.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">(external)</text>
+<text x="1670.0" y="741.0" font-size="8.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">addr, wdata, wstrb, req</text>
+<path d="M1650,655 L1650,690" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1700,690 L1700,655" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="1705" y="677" font-size="9" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">dmem_rdata</text>
+<text x="1650" y="525" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">ex_mem_alu_result</text>
+<text x="1700" y="317" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">ex_mem_valid</text>
+<text x="1700" y="367" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">ex_mem_pc4</text>
+<text x="1700" y="785" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">ex_mem_rd</text>
+<rect x="1800" y="258" width="96" height="552" fill="#cfe3f6" stroke="#2b5b8a" stroke-width="1.6"/>
+<text x="1848.0" y="250" font-size="15" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">MEM/WB</text>
+<rect x="1804" y="278" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1848.0" y="294" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">mem_wb_ctrl</text>
+<rect x="1804" y="310" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1848.0" y="326" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">mem_wb_valid</text>
+<rect x="1804" y="342" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1848.0" y="358" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">mem_wb_pc4</text>
+<rect x="1804" y="518" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1848.0" y="534" font-size="9.15032679738562" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">mem_wb_alu_result</text>
+<rect x="1804" y="588" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1848.0" y="604" font-size="9.722222222222223" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">mem_wb_load_data</text>
+<rect x="1804" y="778" width="88" height="24" fill="#ffffff" stroke="#8fb3d9" stroke-width="0.9"/>
+<text x="1848.0" y="794" font-size="10.5" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">mem_wb_rd</text>
+<polygon points="1950,500 1978,514 1978,676 1950,690" fill="#eef2f7" stroke="#111827" stroke-width="1.5"/>
+<text x="1953" y="533.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">00</text>
+<text x="1953" y="603.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">01</text>
+<text x="1953" y="663.5" font-size="9.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">10</text>
+<path d="M1896,530 L1950,530" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1896,600 L1950,600" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1896,354 L1925,354 L1925,660 L1950,660" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1896,290 L1964,290 L1964,507.0" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<circle cx="1964" cy="290" r="3.2" fill="#1d64d8"/>
+<text x="1968" y="470" font-size="9.5" fill="#1d64d8" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">wb_sel</text>
+<path d="M1964,290 L1984,290 L1984,306 L1996,306" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<path d="M1896,322 L1996,322" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<path d="M1996,298 L2010,298 A16,16 0 0 1 2010,330 L1996,330 Z" fill="#ffffff" stroke="#111827" stroke-width="1.5"/>
+<text x="2004" y="318" font-size="11" fill="#111827" text-anchor="middle" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">&amp;</text>
+<text x="1990" y="350" font-size="9" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">reg_write &amp; valid</text>
+<path d="M2026,314 L2050,314 L2050,852 L680,852 L680,610" fill="none" stroke="#7e22ce" stroke-width="2.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_wb)"/>
+<path d="M1896,790 L2050,790" fill="none" stroke="#7e22ce" stroke-width="2.6" stroke-linejoin="miter" stroke-linecap="butt"/>
+<circle cx="2050" cy="790" r="3.2" fill="#7e22ce"/>
+<text x="2054" y="330" font-size="9.5" fill="#7e22ce" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">wb_we</text>
+<text x="1650" y="866" font-size="10" fill="#7e22ce" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">mem_wb_rd, wb_we (register-file write port)</text>
+<path d="M1978,595 L2020,595 L2020,838 L710,838 L710,610" fill="none" stroke="#7e22ce" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_wb)"/>
+<circle cx="958" cy="838" r="3.2" fill="#7e22ce"/>
+<circle cx="745" cy="838" r="3.2" fill="#7e22ce"/>
+<path d="M745,838 L745,473 L760,473" fill="none" stroke="#7e22ce" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_wb)"/>
+<path d="M745,603 L760,603" fill="none" stroke="#7e22ce" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_wb)"/>
+<circle cx="745" cy="603" r="3.2" fill="#7e22ce"/>
+<text x="1984" y="589" font-size="10" fill="#7e22ce" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">wb_data</text>
+<text x="1650" y="834" font-size="10" fill="#7e22ce" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">wb_data[31:0]</text>
+<text x="1904" y="785" font-size="9.5" fill="#7e22ce" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">mem_wb_rd</text>
+<rect x="24" y="1016" width="1250" height="150" rx="6" fill="#fbfcfe" stroke="#c9d3de"/>
+<text x="40" y="1040" font-size="14" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-weight="bold">RV32I five-stage pipeline  -  datapath of riscv_core_top.sv</text>
+<text x="40" y="1064" font-size="11.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">Branch, JAL and JALR resolve in EX. ex_redirect flushes IF/ID and ID/EX (2 wrong-path slots) and pc_sel picks the target.</text>
+<text x="40" y="1084" font-size="11.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">Load-use: hazard_stall holds PC and IF/ID and inserts an ID/EX bubble (1 cycle). Load data forwards only from MEM/WB.</text>
+<text x="40" y="1104" font-size="11.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">* ex_mem_reg_write = ex_mem_ctrl.reg_write &amp; ex_mem_valid &amp; (wb_sel != LOAD). EX/MEM forwards the ALU result or PC+4.</text>
+<text x="40" y="1124" font-size="11.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">WB -&gt; ID bypass: a register written in WB is read correctly by the instruction in ID in the same cycle.</text>
+<text x="40" y="1144" font-size="11.5" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">Memories sit outside the core (imem_* / dmem_* ports). Valid bits mark bubbles and flushed slots; x0 is never written.</text>
+<rect x="1300" y="1016" width="776" height="150" rx="6" fill="#ffffff" stroke="#c9d3de"/>
+<path d="M1320,1044 L1380,1044" fill="none" stroke="#111827" stroke-width="1.6" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_data)"/>
+<text x="1392" y="1048" font-size="12" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">Normal data path</text>
+<path d="M1320,1068 L1380,1068" fill="none" stroke="#1d64d8" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_ctrl)"/>
+<text x="1392" y="1072" font-size="12" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">Control signals (id_ctrl, id_ex_ctrl, ex_mem_ctrl, mem_wb_ctrl)</text>
+<path d="M1320,1092 L1380,1092" fill="none" stroke="#dc2626" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_fwd)"/>
+<text x="1392" y="1096" font-size="12" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">Forwarding paths (forward_a, forward_b, ex_mem_fwd_data)</text>
+<path d="M1320,1116 L1380,1116" fill="none" stroke="#15803d" stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_haz)"/>
+<text x="1392" y="1120" font-size="12" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">Hazard / stall / flush signals</text>
+<path d="M1320,1140 L1380,1140" fill="none" stroke="#7e22ce" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="butt" marker-end="url(#a_wb)"/>
+<text x="1392" y="1144" font-size="12" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">Write-back path (wb_data, mem_wb_rd, wb_we)</text>
+<circle cx="1820" cy="1044" r="3.2" fill="#111827"/>
+<text x="1832" y="1048" font-size="12" fill="#111827" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">junction (connected)</text>
+<text x="1820" y="1072" font-size="11" fill="#4b5563" text-anchor="start" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif">crossing lines are not connected</text>
+</svg>
