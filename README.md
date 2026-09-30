@@ -22,23 +22,9 @@ The repository contains the design, simulation and synthesis scripts, synthesis 
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    IM[Instruction memory] --> IF[IF: fetch and PC]
-    IF --> IFID[IF/ID]
-    IFID --> ID[ID: decode and register read]
-    ID --> IDEX[ID/EX]
-    IDEX --> EX[EX: ALU and branch decision]
-    EX --> EXMEM[EX/MEM]
-    EXMEM --> MEM[MEM: load/store unit]
-    MEM --> MEMWB[MEM/WB]
-    MEMWB --> WB[WB: result selection]
-    WB --> ID
-    WB --> EX
-    EXMEM --> EX
-    EX -->|redirect and flush| IF
-    MEM <--> DM[Data memory]
-```
+![Five-stage RV32I pipeline datapath with forwarding, hazard detection, and write-back paths](docs/images/pipeline-diagram.png)
+
+The diagram shows the datapath as implemented in [`riscv_core_top.sv`](rtl/riscv_core_top.sv): black is data, blue is control, red is forwarding, green is stall/flush, and purple is write-back. A zoomable [SVG version](docs/images/pipeline-diagram.svg) is also available.
 
 | Stage | Main functions | Main source files |
 | --- | --- | --- |
@@ -232,7 +218,7 @@ RISCV-32I/
 │   ├── run_genus.tcl
 │   └── reports/            # 10ns, 8ns, 6ns, 5ns and 4ns results
 ├── docs/
-│   ├── images/             # result and waveform screenshots
+│   ├── images/             # pipeline diagram, result and waveform screenshots
 │   └── debugging.md
 ├── program.hex             # instruction image for tb_core.sv
 ├── LICENSE                 # MIT license
