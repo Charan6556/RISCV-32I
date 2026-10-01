@@ -22,6 +22,12 @@ The repository contains the design, simulation and synthesis scripts, synthesis 
 
 ## Architecture
 
+![Cadence Genus elaborated schematic of riscv_core_top](docs/images/genus-elaborated-schematic.png)
+
+*`riscv_core_top` as elaborated by Cadence Genus (pre-synthesis), generated directly from the RTL. Visible blocks include `id_ex_reg`, `ex_mem_reg`, `mem_wb_reg`, the decoder, and the forwarding and write-back muxes.*
+
+The drawn datapath below shows the same design organized by stage, to make it easier to follow.
+
 ![Five-stage RV32I pipeline datapath with forwarding, hazard detection, and write-back paths](docs/images/pipeline-diagram.png)
 
 The diagram shows the datapath as implemented in [`riscv_core_top.sv`](rtl/riscv_core_top.sv): black is data, blue is control, red is forwarding, green is stall/flush, and purple is write-back. A zoomable [SVG version](docs/images/pipeline-diagram.svg) is also available.
