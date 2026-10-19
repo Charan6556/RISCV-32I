@@ -1,4 +1,4 @@
-# Genus synthesis for the five-stage core using SKY130 HD.
+# Genus synthesis
 set script_dir [file dirname [file normalize [info script]]]
 set rtl_dir [file normalize [file join $script_dir ../rtl]]
 
@@ -19,7 +19,7 @@ if {![file isfile $library_file]} {
 }
 set_db library [file normalize $library_file]
 
-# Read the package before modules that use its types.
+# Read the package before modules.
 set rtl_files {
     riscv_pkg.sv
     alu.sv branch_cond.sv decoder.sv immgen.sv regfile.sv
@@ -36,7 +36,7 @@ read_hdl -sv $sources
 elaborate riscv_core_top
 check_design -unresolved
 
-# Keep the original 2 ns input/output delays for comparison with saved runs.
+# original 2 ns input/output delays for comparison with saved runs.
 create_clock -name clk -period $clock_period [get_ports clk]
 set_input_delay 2 -clock clk [all_inputs]
 set_output_delay 2 -clock clk [all_outputs]
@@ -45,7 +45,7 @@ syn_generic
 syn_map
 syn_opt
 
-# New runs go here; archived reports remain in synth/reports/.
+# new runs save here, archived reports remain in synth/reports/.
 set output_dir [file join $script_dir build "${clock_period}ns"]
 file mkdir $output_dir
 report_area   > [file join $output_dir area.rpt]
