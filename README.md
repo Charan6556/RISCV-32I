@@ -1,6 +1,6 @@
 # Five-Stage RISC-V Pipeline with UVM Verification
 
-A 32-bit, in-order RISC-V processor implemented in SystemVerilog, with a five-stage pipeline, data forwarding, load-use stalls, and execute-stage branch resolution. The project implements 37 RV32I integer instructions and includes a UVM environment, a commit-based reference scoreboard, functional coverage, ten SystemVerilog assertions, a Bubble Sort program, and Cadence Genus synthesis results using SKY130 HD cells.
+A 32-bit, in-order RISC-V processor implemented in SystemVerilog, with a five-stage pipeline, data forwarding, load-use stalls, and execute-stage branch resolution. The project implements 37 RV32I integer instructions and includes a UVM environment, a commit-based reference scoreboard, functional coverage, ten SystemVerilog assertions, Bubble Sort and a C Snake program compiled with clang and run in Verilator, and Cadence Genus synthesis results using SKY130 HD cells.
 
 The repository contains the design, simulation and synthesis scripts, synthesis reports and netlists, and screenshots of my results.
 
@@ -15,6 +15,7 @@ The repository contains the design, simulation and synthesis scripts, synthesis 
 | Full-test scoreboard, seed 25 | **682 commits, 0 errors** | [Coverage and scoreboard output](docs/images/coverage-seed25.png) |
 | Bubble Sort | **PASS**, output `1 2 4 5 8` | [Program result](docs/images/bubblesort-result.png) |
 | Bubble Sort performance | **169 cycles / 121 retired instructions = 1.397 CPI** | [Program result](docs/images/bubblesort-result.png) |
+| C program on the core (Snake, Verilator) | **56,912,196 instructions, 1.216 CPI** | [Snake demo](riscv_snake_demo/README.md) |
 | Tightest synthesis target met | **4 ns / 250 MHz**, +2.0 ps slack | [4 ns QoR report](synth/reports/4ns/qor.rpt) |
 | Cell area at 4 ns | **71,966.523 µm²** | [4 ns area report](synth/reports/4ns/area.rpt) |
 
@@ -184,7 +185,7 @@ The waveform shows stage-valid signals, register destinations, forwarding, a loa
 
 A self-playing Snake program compiled for RV32I runs on the processor RTL in Verilator. A standalone testbench provides 16 KB of shared instruction/data RAM, a memory-mapped console, and an exit register. The program uses breadth-first search to reach food and a flood-fill check to estimate the space available after each move.
 
-![Snake running on the RV32I simulation](docs/images/snake-preview.png)
+![Snake running on the RV32I simulation](docs/images/snake-demo.gif)
 
 [Watch the demo recording](docs/images/snake-demo.mov) · [Source and run instructions](riscv_snake_demo/README.md)
 
@@ -196,6 +197,8 @@ cd riscv_snake_demo
 Requires Verilator, clang with the RISC-V target, lld, llvm-objcopy, and Python 3. The optional Python renderer turns simulated console output into a GIF or MP4; the visualization is produced on the host.
 
 The recorded run reached a score of 40 in 69,192,928 cycles, with 56,912,196 retired instructions (1.216 CPI). The demo runs in its own testbench, outside the UVM environment.
+
+The performance counters account for every cycle: 56,912,196 retired + 3,217,210 load-use stalls + 2 × 4,531,759 taken redirects = 69,192,924, leaving 4 cycles of pipeline fill.
 
 ## Synthesis characterization
 
