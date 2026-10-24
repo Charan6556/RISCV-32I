@@ -180,6 +180,23 @@ The waveform shows stage-valid signals, register destinations, forwarding, a loa
 
 ![Bubble Sort pipeline waveform](docs/images/pipeline-waveform.png)
 
+## Snake C program demo
+
+A self-playing Snake program compiled for RV32I runs on the processor RTL in Verilator. A standalone testbench provides 16 KB of shared instruction/data RAM, a memory-mapped console, and an exit register. The program uses breadth-first search to reach food and a flood-fill check to estimate the space available after each move.
+
+![Snake running on the RV32I simulation](docs/images/snake-preview.png)
+
+[Watch the demo recording](docs/images/snake-demo.mov) · [Source and run instructions](riscv_snake_demo/README.md)
+
+```bash
+cd riscv_snake_demo
+./run.sh snake | tee build_out.txt
+```
+
+Requires Verilator, clang with the RISC-V target, lld, llvm-objcopy, and Python 3. The optional Python renderer turns simulated console output into a GIF or MP4; the visualization is produced on the host.
+
+The recorded run reached a score of 40 in 69,192,928 cycles, with 56,912,196 retired instructions (1.216 CPI). The demo runs in its own testbench, outside the UVM environment.
+
 ## Synthesis characterization
 
 I generated these reports on September 28, 2026 using **Cadence Genus 25.13-s071_1**. The synthesis script uses `sky130_fd_sc_hd__tt_025C_1v80.lib`: SKY130 HD at the typical 25 °C, 1.8 V corner. The reports describe pre-layout synthesis with `Wireload mode: top` and timing-library area. The library itself is not bundled.
@@ -220,6 +237,7 @@ RISCV-32I/
 │   ├── filelist.f
 │   ├── run.sh              # one test with coverage
 │   └── regression.sh       # full test across seeds, coverage disabled
+├── riscv_snake_demo/       # compiled C application and Verilator test system
 ├── synth/
 │   ├── run_genus.tcl
 │   └── reports/            # 10ns, 8ns, 6ns, 5ns and 4ns results
